@@ -2,6 +2,8 @@ import automationdesign.CartPage;
 import automationdesign.CheckoutPage;
 import automationdesign.CompletePage;
 import automationdesign.YourCart;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,7 +12,19 @@ import java.time.Duration;
 import java.util.List;
 
 public class automationTest {
+    static ExtentReports extent;
     public static void main(String[] args) {
+
+        String path = System.getProperty("user.dir")+"\\reports\\index.html";
+        ExtentSparkReporter reporter = new ExtentSparkReporter(path);
+        reporter.config().setReportName("Web Automation results");
+        reporter.config().setDocumentTitle("Test Results");
+
+        extent = new ExtentReports();
+        extent.attachReporter(reporter);
+        extent.setSystemInfo("Tester", "Milan Ivanovic");
+
+
         String productName = "Sauce Labs Backpack";
         List<String> productName2= List.of("Sauce Labs Bike Light", "Sauce Labs Bolt T-Shirt");
         WebDriver driver = new ChromeDriver();
@@ -61,6 +75,9 @@ public class automationTest {
         }
         completePage.BackHomeButt();
         driver.quit();
+        extent.flush();
 
     }
+
+
 }
